@@ -1,0 +1,14 @@
+#barone {
+  display: none;
+  opacity: 0;
+  transition: 0.2s;
+  overflow: hidden;
+}
+#bartwo {
+  transform: rotate(-40deg) translate(-5px, 5px);
+  transition: 0.2s;
+}
+#barthree {
+  transform: rotate(40deg);
+  transition: 0.2s;
+}

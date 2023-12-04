@@ -12,7 +12,6 @@ interface AppContextValue {
   saveUser: (user: User) => void;
   user: any;
   removeUser: any;
-  // logoutUser: any;
 }
 
 const AppContext = React.createContext<AppContextValue | undefined>(undefined);
@@ -20,6 +19,7 @@ const AppContext = React.createContext<AppContextValue | undefined>(undefined);
 const AppProvider = ({ children }: { children: any }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
+
   const currentApi = api(api);
 
   const saveUser = (user: any) => {
@@ -30,6 +30,9 @@ const AppProvider = ({ children }: { children: any }) => {
     setUser(null);
   };
 
+  //because the token is http only,
+  //accessing it proves to be dificult at the moment to preventthe fetchUser from running unless the token is avaliable
+  //this will run on page refresh /after logout
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -53,19 +56,6 @@ const AppProvider = ({ children }: { children: any }) => {
       }
     };
 
-    // const logoutUser = async () => {
-    //   try {
-    //     const response = await fetch(`${currentApi}/auth/logout`, {
-    //       method: "GET",
-    //     });
-    //     if (response.ok) {
-    //       removeUser();
-    //     }
-    //   } catch (error: any) {
-    //     console.error(error.message);
-    //   }
-    // };
-
     fetchUser();
   }, [currentApi]);
 
@@ -74,7 +64,6 @@ const AppProvider = ({ children }: { children: any }) => {
       value={{
         saveUser,
         user,
-        // logoutUser,
         removeUser,
       }}
     >

@@ -1,41 +1,37 @@
 "use client";
-import React from "react";
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { api } from "@/app/Helpers/Api";
-import { User } from "@/app/Helpers/Users";
 
 const page = () => {
   const currentApi = api(api);
-  const router = useRouter();
 
   const defaultForm = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  };
-  //state if tthe form
-  const [newUser, setNewUser] = useState(defaultForm);
-  const handleChange = (e: any) => {
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    title: "",
+    price: "",
+    duration: "",
+    description: "",
+    image: "",
+    category: "",
   };
 
-  //state of error messages
+  const [newService, setNewService] = useState(defaultForm);
+  const handleChange = (e: any) => {
+    setNewService({ ...newService, [e.target.name]: e.target.value });
+  };
+
   const [showErrorMsg, setShowErrorMsg] = useState(false);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-  const registerUser = async (newUSer: User) => {
+  const createService = async (newService: any) => {
     //make request
     try {
-      const response = await fetch(`${currentApi}/auth/register`, {
+      const response = await fetch(`${currentApi}/services`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(newUSer),
+        body: JSON.stringify(newService),
       });
       if (response.ok) {
         const data = await response.json();
@@ -59,20 +55,14 @@ const page = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !newUser.firstName ||
-      !newUser.lastName ||
-      !newUser.email ||
-      !newUser.password
-    ) {
+    if (!newService.title || !newService.price || !newService.duration) {
       setErrorMessages(["Pleae fill out missing fields"]);
       setShowErrorMsg(true);
       return;
     }
 
     try {
-      await registerUser(newUser);
-      router.push("/pages/success");
+      await createService(newService);
     } catch (error: any) {
       console.error(error.message);
     }
@@ -80,7 +70,7 @@ const page = () => {
 
   return (
     <div className="bg-gray-200 p-6 rounded-lg shadow-md max-w-md mx-auto my-20">
-      <h3>Sign up</h3>
+      <h3>Create new Service</h3>
       <form
         className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
         onSubmit={handleSubmit}
@@ -99,56 +89,81 @@ const page = () => {
         ) : (
           <></>
         )}
-        <label htmlFor="first name">first name</label>
+        <label htmlFor="Title">service title</label>
         <br />
         <input
           type="text"
-          name="firstName"
+          name="title"
           onChange={handleChange}
-          value={newUser.firstName}
+          value={newService.title}
           required
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-          placeholder="first name"
+          placeholder="service title"
         />
         <br />
         <br />
-        <label htmlFor="last name">last name</label>
+        <label htmlFor="price">price </label>
+        <br />
+        <input
+          type="number"
+          name="price"
+          onChange={handleChange}
+          value={newService.price}
+          required
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          placeholder="price in USD"
+        />
+        <br />
+        <br />
+        <label htmlFor="duration">duration in minutes</label>
+        <br />
+        <input
+          type="number"
+          name="duration"
+          onChange={handleChange}
+          value={newService.duration}
+          required
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          placeholder="30"
+        />
+        <br />
+        <br />
+        <label htmlFor="image">imgage</label>
         <br />
         <input
           type="text"
-          name="lastName"
+          name="iamge"
           onChange={handleChange}
-          value={newUser.lastName}
-          required
+          value={newService.image}
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-          placeholder="last name"
+          placeholder="image"
         />
         <br />
         <br />
-        <label htmlFor="email">email</label>
+        <label htmlFor="description">description</label>
         <br />
-        <input
-          type="email"
-          name="email"
+        <textarea
+          name="description"
           onChange={handleChange}
-          value={newUser.email}
-          required
+          value={newService.description}
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-          placeholder="email"
+          placeholder="description"
         />
         <br />
         <br />
-        <label htmlFor="password">password</label>
+        <label htmlFor="category">category</label>
         <br />
-        <input
-          type="password"
-          name="password"
+        <select
+          name="category"
           onChange={handleChange}
-          value={newUser.password}
+          value={newService.category}
           required
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-          placeholder="password"
-        />
+        >
+          <option value="">Select a category</option>
+          <option value="hair">Hair</option>
+          <option value="makeup">Makeup</option>
+        </select>
         <br />
         <br />
         <input
@@ -157,9 +172,6 @@ const page = () => {
           value="SUBMIT"
         ></input>
       </form>
-      <div>
-        Already have an account? <Link href="/pages/login">login here</Link>
-      </div>
     </div>
   );
 };

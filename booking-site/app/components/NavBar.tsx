@@ -20,6 +20,15 @@ const NavBar = () => {
 
   //state of mobile nav
   let [showNav, setShowNav] = useState(false);
+  const [isAdmin, setAmin] = useState(false);
+  const [isUser, setUser] = useState(false);
+
+  // if (user && user.role === "admin") {
+  //   setAmin(true);
+  // }
+  // if (user !== null && user.role === "user") {
+  //   setUser(true);
+  // }
   const toggleNav = () => {
     setShowNav(!showNav);
   };
@@ -59,15 +68,24 @@ const NavBar = () => {
           >
             <div className="nav-button">House rules</div>
           </Link>
-          <a
+
+          <Link
+            href="/pages/services"
+            className="border-b-2 border-transparent hover:border-b-2 hover:border-green-300"
+          >
+            <div className="nav-button">Book now</div>
+          </Link>
+
+          {/* <a
             href="https://slayitkita.square.site/"
             target="_blank"
             className="border-b-2 border-transparent hover:border-green-300 hover:text-green-300"
           >
             Book now
-          </a>
+          </a> */}
         </div>
-        {user ? (
+
+        {user! && user.role === "user" ? (
           <div className="flex items-center justify-between space-x-4">
             <span>{user.firstName}</span>
             <Link href="/pages/account" className="hidden md:block">
@@ -78,6 +96,25 @@ const NavBar = () => {
               <HamburgerBtn showNav={showNav} toggleNav={toggleNav} />
             </div>
           </div>
+        ) : (
+          <></>
+        )}
+        {user! && user.role === "admin" ? (
+          <div className="flex items-center justify-between space-x-4">
+            <span>{user.firstName}</span>
+            <Link href="/pages/admin" className="hidden md:block">
+              <div>admin</div>
+            </Link>
+            <button onClick={logoutUser}>logout</button>
+            <div onClick={toggleNav}>
+              <HamburgerBtn showNav={showNav} toggleNav={toggleNav} />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+        {user ? (
+          <></>
         ) : (
           <div className="flex items-center justify-between space-x-4">
             <Link href="/pages/login" className="hidden md:block">

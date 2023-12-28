@@ -6,13 +6,7 @@ import HamburgerBtn from "./hamburgerbtn/HamburgerBtn";
 import MobileNav from "./mobilenav/MobileNav";
 import { useGlobalContext } from "../context";
 import { api } from "../Helpers/Api";
-
-interface User {
-  userId: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
+import { User } from "../Helpers/Users";
 
 const NavBar = () => {
   const userContext = useGlobalContext();
@@ -20,15 +14,7 @@ const NavBar = () => {
 
   //state of mobile nav
   let [showNav, setShowNav] = useState(false);
-  const [isAdmin, setAmin] = useState(false);
-  const [isUser, setUser] = useState(false);
 
-  // if (user && user.role === "admin") {
-  //   setAmin(true);
-  // }
-  // if (user !== null && user.role === "user") {
-  //   setUser(true);
-  // }
   const toggleNav = () => {
     setShowNav(!showNav);
   };
@@ -57,7 +43,7 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="w-full p-5 flex items-center justify-between bg-white sticky top-0 z-50 shadow-lg space-x-4">
+      <div className="w-full flex items-center justify-between bg-white sticky top-0 z-50 shadow-lg space-x-4 p-5">
         <Link href="/" className="text-grey-800 text-lg" onClick={noNav}>
           LOGO
         </Link>

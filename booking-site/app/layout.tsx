@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <AppProvider>
       <html lang="en">
+        {/* <body className={`p-5 ${inter.className}`}> */}
         <body className={inter.className}>
           <NavBar />
           {children}

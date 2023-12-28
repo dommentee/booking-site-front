@@ -1,15 +1,8 @@
 "use client";
 import { useGlobalContext } from "@/app/context";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
-interface User {
-  userId: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
+import { User } from "@/app/Helpers/Users";
 
 const page = () => {
   const userContext = useGlobalContext() || null;

@@ -44,33 +44,25 @@ const NavBar = () => {
   return (
     <>
       <div className="w-full flex items-center justify-between bg-white sticky top-0 z-50 shadow-lg space-x-4 p-5">
-        <Link href="/" className="text-grey-800 text-lg" onClick={noNav}>
-          LOGO
-        </Link>
-        <div className="w-full items-center hidden md:flex space-x-4">
+        <div className="flex items-center justify-between space-x-4">
+          <div className="flex items-center justify-between space-x-4">
+            <Link href="/" className="text-grey-800 text-lg" onClick={noNav}>
+              LOGO
+            </Link>
+            <Link
+              href="/pages/services"
+              className="border-b-2 border-transparent hover:border-b-2 hover:border-green-300"
+            >
+              <div className="nav-button">Book now</div>
+            </Link>
+          </div>
           <Link
             href="/pages/houserules"
-            className="border-b-2 border-transparent hover:border-b-2 hover:border-green-300"
+            className="border-b-2 border-transparent hover:border-b-2 hover:border-green-300 hidden md:block"
           >
             <div className="nav-button">House rules</div>
           </Link>
-
-          <Link
-            href="/pages/services"
-            className="border-b-2 border-transparent hover:border-b-2 hover:border-green-300"
-          >
-            <div className="nav-button">Book now</div>
-          </Link>
-
-          {/* <a
-            href="https://slayitkita.square.site/"
-            target="_blank"
-            className="border-b-2 border-transparent hover:border-green-300 hover:text-green-300"
-          >
-            Book now
-          </a> */}
         </div>
-
         {user! && user.role === "user" ? (
           <div className="flex items-center justify-between space-x-4">
             <span>{user.firstName}</span>

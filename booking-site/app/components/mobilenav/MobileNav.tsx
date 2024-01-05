@@ -19,22 +19,6 @@ const MobileNav = (props: any) => {
       >
         <div className="nav-button">Book now</div>
       </Link>
-      {/* <a
-        href="https://slayitkita.square.site/"
-        target="_blank"
-        className=""
-        onClick={props.noNav}
-      >
-        Book now
-      </a> */}
-      {/* <Link href="/pages/signup" className="" onClick={props.noNav}>
-        Signup
-      </Link>
-      <Link href="/pages/login" onClick={props.noNav}>
-        <div className="session-button" id="login">
-          login
-        </div>
-      </Link> */}
 
       {user! && user.role === "user" ? (
         <Link href="/pages/account" className="" onClick={props.noNav}>

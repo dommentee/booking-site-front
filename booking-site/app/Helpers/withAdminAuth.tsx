@@ -26,7 +26,7 @@ const withAdminAuth = (WrappedComponent: any) => {
       }
     }, [user, router]);
     if (!user || (user && user.role !== "admin")) {
-      router.push("/");
+      return <p>Access denied!</p>;
     }
     return <WrappedComponent {...props} />;
   };

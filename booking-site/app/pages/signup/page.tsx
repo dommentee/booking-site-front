@@ -26,7 +26,7 @@ const page = () => {
   const [showErrorMsg, setShowErrorMsg] = useState(false);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-  const registerUser = async (newUSer: User) => {
+  const registerUser = async (newUser: any) => {
     //make request
     try {
       const response = await fetch(`${currentApi}/auth/register`, {
@@ -35,7 +35,7 @@ const page = () => {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(newUSer),
+        body: JSON.stringify(newUser),
       });
       if (response.ok) {
         const data = await response.json();

@@ -1,9 +1,18 @@
-"use client";
 import React, { useState } from "react";
 import CreateService from "../adminAuthorizedOnly/CreateService";
+import EditService from "../adminAuthorizedOnly/EditService";
 
 const Tabs = () => {
   const [tab, setTab] = useState("overview");
+  const [update, setUpdated] = useState(false);
+
+  const setUpdate = () => {
+    setUpdated(true);
+    //set updated back to false to refetch on submit
+    setTimeout(() => {
+      setUpdated(false);
+    }, 2000);
+  };
   const handleTabClick = (selectedTab: any) => {
     setTab(selectedTab);
   };
@@ -51,16 +60,16 @@ const Tabs = () => {
           Clients
         </button>
         <button
-          onClick={() => handleTabClick("createService")}
+          onClick={() => handleTabClick("manageServices")}
           className={`px-4 py-2 mr-2 rounded ${
             tab === "createService"
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-700"
           } hover:bg-blue-600 focus:outline-none focus:bg-blue-600`}
         >
-          Create Service
+          Manage Services
         </button>
-        <button
+        {/* <button
           onClick={() => handleTabClick("editService")}
           className={`px-4 py-2 rounded ${
             tab === "editService"
@@ -69,7 +78,7 @@ const Tabs = () => {
           } hover:bg-blue-600 focus:outline-none focus:bg-blue-600`}
         >
           Edit Service
-        </button>
+        </button> */}
       </div>
 
       {/* Render content based on selected tab */}
@@ -78,12 +87,18 @@ const Tabs = () => {
         {tab === "bookings" && <div>Bookings content goes here</div>}
         {tab === "revenue" && <div>Revenue content goes here</div>}
         {tab === "clients" && <div>Clients content goes here</div>}
-        {tab === "createService" && (
+        {tab === "manageServices" && (
           <div>
-            <CreateService />
+            <div className="">
+              <h3>Service Creater</h3>
+              <CreateService setUpdate={setUpdate} />
+            </div>
+            <div className="">
+              <EditService update={update} setUpdate={setUpdate} />
+            </div>
           </div>
         )}
-        {tab === "editService" && <div>Edit Service content goes here</div>}
+        {/* {tab === "editService" && <div>Edit Service content goes here</div>} */}
       </div>
     </div>
   );

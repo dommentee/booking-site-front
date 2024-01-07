@@ -1,25 +1,39 @@
 "use client";
 import { useGlobalContext } from "@/app/context";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { User } from "@/app/Helpers/Users";
 
 const page = () => {
+  //set usercontext
   const userContext = useGlobalContext() || null;
-
+  //get user
   const user: User = userContext?.user || null;
+  //set loading state to prevent redirect on refresh
+  const [isLoading, setIsLaoding] = useState(true);
 
   const router = useRouter();
 
-  if (user) {
-    const { userId, firstName, lastName, role } = user;
-  }
-
   useEffect(() => {
-    if (!user) {
-      router.push("/pages/login");
-    }
+    //there will call a delay when user navagates to page
+    const delayRedirect = setTimeout(() => {
+      try {
+        if (!user) {
+          router.push("/pages/login");
+        } else {
+          setIsLaoding(false);
+        }
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    }, 100);
+    return () => {
+      clearTimeout(delayRedirect);
+    };
   }, [user, router]);
+  if (isLoading) {
+    return <p>loading...</p>;
+  }
 
   return (
     <div>

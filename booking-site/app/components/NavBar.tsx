@@ -52,6 +52,7 @@ const NavBar = () => {
             <Link
               href="/pages/services"
               className="border-b-2 border-transparent hover:border-b-2 hover:border-green-300"
+              onClick={noNav}
             >
               <div className="nav-button">Book now</div>
             </Link>

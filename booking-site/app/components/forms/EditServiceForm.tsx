@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "@/app/Helpers/Api";
 import { Service } from "@/app/Helpers/types";
-import { log } from "console";
 
 interface EditServiceFormProps {
   service: Service;

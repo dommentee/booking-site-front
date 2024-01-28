@@ -4,6 +4,7 @@ import { api } from "@/app/Helpers/Api";
 
 interface User {
   userId: string;
+  email: string;
   firstName: string;
   lastName: string;
   role: string;
